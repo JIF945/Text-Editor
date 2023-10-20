@@ -33,9 +33,26 @@ console.log('Data saved to the database', result);
 return result;
 };
 
-
 // TODO: Add logic for a method that gets all the content from the database
+export const getDb = async () => {
+  console.log('Get from the database');
+// Create a connection to the database database and version we want to use.
+const textEditorDb = await openDB('textEditor', 1);
 
-export const getDb = async () => console.error('getDb not implemented');
+// Create a new transaction and specify the database and data privileges.
+const tx = textEditorDb.transaction('textEditor', 'readonly');
+
+// Open up the desired object store.
+const store = tx.objectStore('ttextEditor');
+
+// Use the .get() method to get a piece of data from the database based on the id.
+const request = store.get(1);
+
+// Get confirmation of the request.
+const result = await request;
+console.log('result.value', result);
+return result;
+
+};
 
 initdb();
